@@ -1,0 +1,35 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Node.js dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Logs
+*.log
+
+# OS generated files
+*.swp
+*.swo
+
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE/Editor directories
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Environment variables
+.env
+.gitingore
+
+# Dependency directories
+.bower_components/

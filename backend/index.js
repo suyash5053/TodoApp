@@ -1,22 +1,24 @@
-import express, { json } from "express";
-import { todo } from "./todo";
-
+const express = require("express");
+const { createTodo, updateTodo } = require("./types");
 const app = express();
 const port = 3000;
+const { todo } = require("./db");
 
-app.use(json());
+app.use(express.json());
 
-app.get("/todoList", async (req, res) => {
-  const todoList = await todo.find({});
-  res.status(200).json(todoList);
+app.get("/todos", async (req, res) => {
+  const todos = await todo.find({});
+  res.json({
+    todos,
+  });
 });
 
 app.post("/todo", async (req, res) => {
   const createPayload = req.body;
-  const parsedPayload = app.safeParse(createPayload);
+  const parsedPayload = createTodo.parse(createPayload);
   if (!parsedPayload.success) {
     res.status(400).json({
-      message: "Invalid payload",
+      msg: "Wrong inputs provided",
     });
     return;
   }
@@ -25,22 +27,21 @@ app.post("/todo", async (req, res) => {
     description: createPayload.description,
     completed: false,
   });
-
   res.status(201).json({
-    msg: "Todo Created Successfully",
+    msg: "Todo created",
   });
 });
 
-app.put("/todoCompleted", async (req, res) => {
+app.put("/completed", (req, res) => {
   const updatePayload = req.body;
-  const parsedPayload = app.safeParse(updatePayload);
+  const parsedPayload = updateTodo.parse(updatePayload);
   if (!parsedPayload.success) {
     res.status(400).json({
-      message: "Invalid payload",
+      msg: "Wrong inputs provided",
     });
     return;
   }
-  await todo.update(
+  todo.update(
     {
       _id: req.body.id,
     },
@@ -48,11 +49,11 @@ app.put("/todoCompleted", async (req, res) => {
       completed: true,
     }
   );
-  res.status(200).json({
-    msg: "Todo Completed Successfully",
+  res.json({
+    msg: "Todo marked as completed",
   });
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Example app listening at http://localhost:${port}`);
 });

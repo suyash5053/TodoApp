@@ -1,12 +1,16 @@
-import z from "zod";
+const zod = require("zod");
 
-const CreateTodo = z.object({
-  title: z.string(),
-  description: z.string(),
+const createTodo = zod.object({
+  title: zod.string(),
+  description: zod.string(),
+  completed: zod.boolean(),
 });
 
-const CompleteTodo = z.object({
-  id: z.string(),
+const updateTodo = zod.object({
+  id: zod.string(),
 });
 
-export { CreateTodo, CompleteTodo };
+module.exports = {
+  createTodo: createTodo,
+  updateTodo: updateTodo,
+};

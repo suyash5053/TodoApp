@@ -1,14 +1,15 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 require("dotenv").config();
 
 mongoose.connect(process.env.MONGODB_URL);
-
-const TodoSchema = mongoose.Schema({
+const todoSchema = new mongoose.Schema({
   title: String,
   description: String,
   completed: Boolean,
 });
 
-const todo = mongoose.model("todo", TodoSchema);
+const todo = mongoose.model("todos", todoSchema);
 
-module.export = { todo };
+module.exports = {
+  todo,
+};

@@ -15,7 +15,7 @@ app.get("/todos", async (req, res) => {
 
 app.post("/todo", async (req, res) => {
   const createPayload = req.body;
-  const parsedPayload = createTodo.parse(createPayload);
+  const parsedPayload = createTodo.safeParse(createPayload);
   if (!parsedPayload.success) {
     res.status(400).json({
       msg: "Wrong inputs provided",
@@ -34,7 +34,7 @@ app.post("/todo", async (req, res) => {
 
 app.put("/completed", (req, res) => {
   const updatePayload = req.body;
-  const parsedPayload = updateTodo.parse(updatePayload);
+  const parsedPayload = updateTodo.safeParse(updatePayload);
   if (!parsedPayload.success) {
     res.status(400).json({
       msg: "Wrong inputs provided",
